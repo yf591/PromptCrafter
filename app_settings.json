@@ -1,0 +1,17 @@
+{
+    "positive_prompt_template": "extremely detailed CG, 8k, masterpiece, best quality, hyperrealistic, sharp focus, intricate details, professional art, perfect lighting, ultra high res,  {keyword}, RAW photo, no artifacts, best quality",
+    "negative_prompt_template": "low quality, worst quality, normal quality, blurry, pixelated, distortion, bad anatomy, disfigured, out of focus, bad proportions, cartoon, anime, 3d,  (worst quality:1.5), (low quality:1.5), (normal quality:1.5), lowres, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, age spot, low contrast, text, logo, watermark",
+    "model_name": "Gustavosta/MagicPrompt-Stable-Diffusion",
+    "use_model_for_generation": true,
+    "loras": [
+        "add-detail-xl",
+        "epi_noiseoffset2",
+        "lcm-lora-sdxl"
+    ],
+    "auto_generate_areas": [
+        "People",
+        "NSFW",
+        "Prompts"
+    ],
+    "ai_generation_mode": "positive_only"
+}
