@@ -1,5 +1,3 @@
-# app/prompt_generator.py
-
 from transformers import pipeline
 from app.config import APP_SETTINGS
 import torch
@@ -19,15 +17,13 @@ def generate_prompt(keyword, lora_name=""):
     negative_prompt = ""
 
     if APP_SETTINGS.get("use_model_for_generation", False) and generator:
-      if ai_mode == "positive_only" or ai_mode == "both":
+      if ai_mode == "positive_only":
           positive_prompt = _generate_model_prompt(keyword, "positive")
-      else:
-          positive_prompt = _generate_template_prompt(keyword, "positive")
-
-      if ai_mode == "negative_only" or ai_mode == "both":
-          negative_prompt = _generate_model_prompt(keyword, "negative")
-      else:
-          negative_prompt = _generate_template_prompt(keyword, "negative")
+      elif ai_mode == "negative_only":
+        negative_prompt = _generate_model_prompt(keyword, "negative")
+      elif ai_mode == "both":
+        positive_prompt = _generate_model_prompt(keyword, "positive")
+        negative_prompt = _generate_model_prompt(keyword, "negative")
     else:
         positive_prompt = _generate_template_prompt(keyword, "positive")
         negative_prompt = _generate_template_prompt(keyword, "negative")
