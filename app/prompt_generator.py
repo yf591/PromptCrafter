@@ -1,3 +1,5 @@
+# prompt_generator.py
+
 from transformers import pipeline
 from app.config import APP_SETTINGS
 import torch
@@ -56,9 +58,11 @@ def _generate_model_prompt(keyword, prompt_type):
     
 
 def _generate_template_prompt(keyword, prompt_type):
-  if prompt_type == "positive":
-      template = APP_SETTINGS.get("positive_prompt_template", "")
-  elif prompt_type == "negative":
-    template = APP_SETTINGS.get("negative_prompt_template", "")
-  
-  return template.format(keyword=keyword)
+    if prompt_type == "positive":
+        template_key = APP_SETTINGS.get("selected_positive_template", "realistic_positive_prompt_template")
+        template = APP_SETTINGS.get(template_key, "")  # 選択されたテンプレートを取得
+    elif prompt_type == "negative":
+        template_key = APP_SETTINGS.get("selected_negative_template", "realistic_negative_prompt_template")
+        template = APP_SETTINGS.get(template_key, "")  # 選択されたテンプレートを取得
+
+    return template.format(keyword=keyword)

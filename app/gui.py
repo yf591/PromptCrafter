@@ -9,67 +9,110 @@ from app.favorites_manager import add_to_favorites, remove_from_favorites
 
 class SettingsDialog(simpledialog.Dialog):
     def body(self, master):
-        tk.Label(master, text="Positive Template:", font=("Arial", 12)).grid(row=0, column=0, sticky="w", padx=5, pady=5)
+        # テンプレート選択用のドロップダウンリスト        
+        tk.Label(master, text="Selected Positive Template:", font=("Arial", 12)).grid(row=0, column=0, sticky="w", padx=5, pady=5)
+        self.selected_positive_template_var = tk.StringVar(value=APP_SETTINGS.get("selected_positive_template", "realistic_positive_prompt_template"))
+        self.selected_positive_template_dropdown = ttk.Combobox(master, textvariable=self.selected_positive_template_var, values=list(self.get_positive_template_keys()), font=("Arial", 11), state="readonly")
+        self.selected_positive_template_dropdown.grid(row=0, column=1, sticky="we", padx=5, pady=5)
+        self.selected_positive_template_dropdown.bind("<<ComboboxSelected>>", self.update_positive_template_text)
+
+        tk.Label(master, text="Positive Template:", font=("Arial", 12)).grid(row=1, column=0, sticky="w", padx=5, pady=5)
         self.positive_template = scrolledtext.ScrolledText(master, width=60, height=5, font=("Arial", 11))
-        self.positive_template.insert(tk.END, APP_SETTINGS.get("positive_prompt_template", ""))
-        self.positive_template.grid(row=0, column=1, sticky="we", padx=5, pady=5)
+        self.positive_template.insert(tk.END, APP_SETTINGS.get(self.selected_positive_template_var.get(), ""))
+        self.positive_template.grid(row=1, column=1, sticky="we", padx=5, pady=5)
+        self.positive_template.config(state="disabled")  # スクロールはできるが編集はできなくする
 
-        tk.Label(master, text="Negative Template:", font=("Arial", 12)).grid(row=1, column=0, sticky="w", padx=5, pady=5)
+        tk.Label(master, text="Selected Negative Template:", font=("Arial", 12)).grid(row=2, column=0, sticky="w", padx=5, pady=5)
+        self.selected_negative_template_var = tk.StringVar(value=APP_SETTINGS.get("selected_negative_template", "realistic_negative_prompt_template"))
+        self.selected_negative_template_dropdown = ttk.Combobox(master, textvariable=self.selected_negative_template_var, values=list(self.get_negative_template_keys()), font=("Arial", 11), state="readonly")
+        self.selected_negative_template_dropdown.grid(row=2, column=1, sticky="we", padx=5, pady=5)
+        self.selected_negative_template_dropdown.bind("<<ComboboxSelected>>", self.update_negative_template_text)
+
+        tk.Label(master, text="Negative Template:", font=("Arial", 12)).grid(row=3, column=0, sticky="w", padx=5, pady=5)
         self.negative_template = scrolledtext.ScrolledText(master, width=60, height=5, font=("Arial", 11))
-        self.negative_template.insert(tk.END, APP_SETTINGS.get("negative_prompt_template", ""))
-        self.negative_template.grid(row=1, column=1, sticky="we", padx=5, pady=5)
+        self.negative_template.insert(tk.END, APP_SETTINGS.get(self.selected_negative_template_var.get(), ""))
+        self.negative_template.grid(row=3, column=1, sticky="we", padx=5, pady=5)
+        self.negative_template.config(state="disabled")
 
-        tk.Label(master, text="Model Name:", font=("Arial", 12)).grid(row=2, column=0, sticky="w", padx=5, pady=5)
+        tk.Label(master, text="Model Name:", font=("Arial", 12)).grid(row=4, column=0, sticky="w", padx=5, pady=5)
         self.model_name_entry = tk.Entry(master, width=60, font=("Arial", 11))
         self.model_name_entry.insert(0, APP_SETTINGS.get("model_name", ""))
-        self.model_name_entry.grid(row=2, column=1, sticky="we", padx=5, pady=5)
+        self.model_name_entry.grid(row=4, column=1, sticky="we", padx=5, pady=5)
 
-        tk.Label(master, text="Use Model for Generation:", font=("Arial", 12)).grid(row=3, column=0, sticky="w", padx=5, pady=5)
+        tk.Label(master, text="Use Model for Generation:", font=("Arial", 12)).grid(row=5, column=0, sticky="w", padx=5, pady=5)
         self.use_model_var = tk.BooleanVar(value=APP_SETTINGS.get("use_model_for_generation", False))
         self.use_model_checkbox = tk.Checkbutton(master, variable=self.use_model_var, font=("Arial", 11))
-        self.use_model_checkbox.grid(row=3, column=1, sticky="w", padx=5, pady=5)
+        self.use_model_checkbox.grid(row=5, column=1, sticky="w", padx=5, pady=5)
 
-        tk.Label(master, text="Auto Generate Areas:", font=("Arial", 12)).grid(row=4, column=0, sticky="w", padx=5, pady=5)
+        tk.Label(master, text="Auto Generate Areas:", font=("Arial", 12)).grid(row=6, column=0, sticky="w", padx=5, pady=5)
         self.auto_generate_areas_entry = tk.Entry(master, width=60, font=("Arial", 11))
         self.auto_generate_areas_entry.insert(0, ', '.join(APP_SETTINGS.get("auto_generate_areas", [])))
-        self.auto_generate_areas_entry.grid(row=4, column=1, sticky="we", padx=5, pady=5)
+        self.auto_generate_areas_entry.grid(row=6, column=1, sticky="we", padx=5, pady=5)
 
-        tk.Label(master, text="AI Generation Mode:", font=("Arial", 12)).grid(row=5, column=0, sticky="w", padx=5, pady=5)
+        tk.Label(master, text="AI Generation Mode:", font=("Arial", 12)).grid(row=7, column=0, sticky="w", padx=5, pady=5)
         self.ai_mode_var = tk.StringVar(value=APP_SETTINGS.get("ai_generation_mode", "both"))
         modes = ["positive_only", "negative_only", "both"]
         for i, mode in enumerate(modes):
             rb = tk.Radiobutton(master, text=mode, variable=self.ai_mode_var, value=mode, font=("Arial", 11))
-            rb.grid(row=5, column=i + 1, sticky="w", padx=5, pady=5)
+            rb.grid(row=7, column=i + 1, sticky="w", padx=5, pady=5)
 
+        # Add Prompts from CSVボタンを移動
         add_prompts_button = tk.Button(master, text="Add Prompts from CSV", command=self.add_prompts_from_csv_action, bg="#4CAF50", fg="white", font=("Arial", 11))
-        add_prompts_button.grid(row=6, column=0, columnspan=3, pady=10)
+        add_prompts_button.grid(row=8, column=0, columnspan=3, pady=10)
 
-        return self.positive_template
+        return self.model_name_entry
+    
 
     def add_prompts_from_csv_action(self):
-        file_path = filedialog.askopenfilename(defaultextension=".csv", filetypes=[("CSV files", "*.csv")])
-        if file_path:
-            add_prompts_from_csv(file_path)
-            messagebox.showinfo("Success", "Prompts added to categories.json.")
+         file_path = filedialog.askopenfilename(defaultextension=".csv", filetypes=[("CSV files", "*.csv")])
+         if file_path:
+             add_prompts_from_csv(file_path)
+             messagebox.showinfo("Success", "Prompts added to categories.json.")
 
     def apply(self):
         global DEFAULT_APP_SETTINGS
-        APP_SETTINGS["positive_prompt_template"] = self.positive_template.get("1.0", tk.END).strip()
-        APP_SETTINGS["negative_prompt_template"] = self.negative_template.get("1.0", tk.END).strip()
         APP_SETTINGS["model_name"] = self.model_name_entry.get()
         APP_SETTINGS["use_model_for_generation"] = self.use_model_var.get()
         auto_gen_areas = [area.strip() for area in self.auto_generate_areas_entry.get().split(',')]
         APP_SETTINGS["auto_generate_areas"] = [area for area in auto_gen_areas if area]
         APP_SETTINGS["ai_generation_mode"] = self.ai_mode_var.get()
+        APP_SETTINGS["selected_positive_template"] = self.selected_positive_template_var.get()
+        APP_SETTINGS["selected_negative_template"] = self.selected_negative_template_var.get()
 
-        DEFAULT_APP_SETTINGS["positive_prompt_template"] = APP_SETTINGS["positive_prompt_template"]
-        DEFAULT_APP_SETTINGS["negative_prompt_template"] = APP_SETTINGS["negative_prompt_template"]
         DEFAULT_APP_SETTINGS["model_name"] = APP_SETTINGS["model_name"]
         DEFAULT_APP_SETTINGS["use_model_for_generation"] = APP_SETTINGS["use_model_for_generation"]
         DEFAULT_APP_SETTINGS["auto_generate_areas"] = APP_SETTINGS["auto_generate_areas"]
         DEFAULT_APP_SETTINGS["ai_generation_mode"] = APP_SETTINGS["ai_generation_mode"]
+        DEFAULT_APP_SETTINGS["selected_positive_template"] = APP_SETTINGS["selected_positive_template"]
+        DEFAULT_APP_SETTINGS["selected_negative_template"] = APP_SETTINGS["selected_negative_template"]
 
         save_settings()
+
+    def get_positive_template_keys(self):
+        # APP_SETTINGSからポジティブテンプレートのキーだけを取得する関数(ただし、"positive_prompt_template"は除く)
+        return {key: value for key, value in APP_SETTINGS.items() if "positive_prompt_template" in key and key != "positive_prompt_template"}
+
+    def get_negative_template_keys(self):
+        # APP_SETTINGSからネガティブテンプレートのキーだけを取得する関数(ただし、"negative_prompt_template"は除く)
+        return {key: value for key, value in APP_SETTINGS.items() if "negative_prompt_template" in key and key != "negative_prompt_template"}
+    
+    def update_positive_template_text(self, event=None):
+        # 選択されているテンプレートキーを取得
+        selected_template_key = self.selected_positive_template_var.get()
+        # 選択されているテンプレートの内容をテキストボックスに設定
+        self.positive_template.config(state="normal")  # テキストボックスを通常状態（編集可能）にする
+        self.positive_template.delete("1.0", tk.END)
+        self.positive_template.insert("1.0", APP_SETTINGS.get(selected_template_key, ""))
+        self.positive_template.config(state="disabled")  # テキストボックスを無効状態（編集不可）にする
+
+    def update_negative_template_text(self, event=None):
+        # 選択されているテンプレートキーを取得
+        selected_template_key = self.selected_negative_template_var.get()
+        # 選択されているテンプレートの内容をテキストボックスに設定
+        self.negative_template.config(state="normal")  # テキストボックスを通常状態（編集可能）にする
+        self.negative_template.delete("1.0", tk.END)
+        self.negative_template.insert("1.0", APP_SETTINGS.get(selected_template_key, ""))
+        self.negative_template.config(state="disabled")  # テキストボックスを無効状態（編集不可）にする
 
 class PromptCrafterGUI:
     def __init__(self, root):

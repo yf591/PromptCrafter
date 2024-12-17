@@ -1,12 +1,10 @@
 # PromptCrafter Code Overview
 
-
 ## `app/__init__.py`
 *   **Overview**
     * This file is a Python package initialization file. It is usually empty, but it can include package-level initialization code if needed.
 *   **Code Explanation**
     *   This is an empty file used to indicate that the `app` directory should be recognized as a Python package.
-
 
 ## `app/gui.py`
 *   **Overview**
@@ -17,7 +15,6 @@
     *   **Event Handlers:** Defines the behavior when each button is clicked. For example, `generate_prompt_action()` generates and displays prompts, `copy_positive_prompt()` and `copy_negative_prompt()` copy prompts to the clipboard, and `open_settings()` opens the settings screen.
     *   **`create_gui()` Function:** Creates the main window of the application and starts the Tkinter main loop.
 
-
 ## `app/prompt_generator.py`
 *   **Overview**
     * This file defines the logic for generating prompts using an AI model. It uses the Hugging Face `transformers` library to load a text generation model and generate prompts.
@@ -26,7 +23,6 @@
     *   **`generate_prompt(keyword, lora_name)` Function:** Takes a keyword and a selected LoRA model name, and calls either the `_generate_model_prompt` or `_generate_template_prompt` function to generate both positive and negative prompts.
     *   **`_generate_model_prompt(keyword, prompt_type)` Function:** Handles prompt generation using the AI model. Returns an error message if the model could not be loaded.
     *   **`_generate_template_prompt(keyword, prompt_type)` Function:** Handles prompt generation based on a template. Uses the templates set in `config.py`.
-
 
 ## `app/config.py`
 *   **Overview**
@@ -41,6 +37,13 @@
     *   **`save_categories(file_path=None)` Function:** Saves the current categories to a JSON file.
     *    **`add_prompts_from_csv(file_path)` Function:**  Reads the specified CSV file and adds categories and prompts.
 
+## `app/favorites_manager.py`
+
+*   **Overview**
+    * This file defines the logic for adding and removing favorite prompts.
+*   **Code Explanation**
+    *   **`add_to_favorites(prompt, prompt_type, key)` Function:** Adds a prompt to favorites with the specified prompt, type, and key.
+    *   **`remove_from_favorites(key, prompt_type)` Function:** Removes a favorite prompt that matches the specified key and type.
 
 ## `categories.json`
 *   **Overview**

@@ -4,7 +4,6 @@
 
 PromptCrafter は、強力なテキストから画像生成モデルである Stable Diffusion のために高品質なプロンプトを生成するのを支援するデスクトップアプリケーションです。Tkinter ベースの GUI を採用し、ポジティブプロンプトとネガティブプロンプトの両方を生成するためのユーザーフレンドリーなインターフェースを提供します。このアプリケーションは、事前学習済みのテキスト生成モデル（デフォルト: `Gustavosta/MagicPrompt-Stable-Diffusion` ）を使用したモデルベースのプロンプト生成、またはテンプレートベースのプロンプト生成をサポートしています。また、LoRA モデルを簡単に組み込むことができ、分類されたキーワード選択システムも利用できます。
 
-
 ## 特徴
 
 -   **テンプレートベースおよびモデルベースのプロンプト生成:** テンプレートに基づいてプロンプトを生成するか、AI モデルを利用して、より動的で多様な出力を生成できます。
@@ -16,9 +15,8 @@ PromptCrafter は、強力なテキストから画像生成モデルである St
 -   **カスタマイズ可能なテンプレート:** アプリケーションの設定を通じてプロンプトテンプレートを変更します。
 -   **コピー＆ペースト:** 生成されたプロンプトは、クリップボードに簡単にコピーできます。
 -   **AI生成モード:** AIがプロンプトを生成する範囲を選択できます（ポジティブのみ、ネガティブのみ、両方）。
--   **レスポンシブGUI**: GUIは画面の中央に表示され、動的にサイズ調整されます。
--   **マウスホイールスクロール**: ポップアップウィンドウでマウスホイールによるスクロールが可能です。
-
+-  **レスポンシブGUI**: GUIは画面の中央に表示され、動的にサイズ調整されます。
+-  **マウスホイールスクロール**: ポップアップウィンドウでマウスホイールによるスクロールが可能です。
 
 ## リポジトリ構成
 
@@ -27,59 +25,68 @@ PromptCrafter/
 │
 ├── app/
 │   ├── __init__.py
-│   ├── gui.py              # GUIを定義するファイル
-│   ├── prompt_generator.py # プロンプト生成ロジックを定義するファイル
-│   ├── config.py         　# 設定ファイルや環境設定を定義するファイル
-│   └── categories.json     # 分類されたカテゴリとキーワードを格納するファイル
+│   ├── gui.py               # GUIを定義するファイル
+│   ├── prompt_generator.py  # プロンプト生成ロジックを定義するファイル
+│   ├── favorites_manager.py # お気に入りプロンプトの追加と削除のロジックを定義するファイル
+│   ├── config.py         　 # 設定ファイルや環境設定を定義するファイル
+│   └── categories.json      # 分類されたカテゴリとキーワードを格納するファイル
 │
-├── main.py                 # アプリケーションのエントリーポイント
-├── requirements.txt        # 必要なパッケージ一覧
-└── README.md               # 英語版の README
-└── README-jp.md            # このファイル（日本語版の README）
+├── main.py                  # アプリケーションのエントリーポイント
+├── requirements.txt         # 必要なパッケージ一覧
+└── README.md                # 英語版の README
+└── README-ja.md             # このファイル（日本語版の README）
 ```
-
 
 ## はじめ方
 
-1.  **リポジトリをクローンします:**
+1. **リポジトリをクローンします:**
 
     ```bash
     git clone https://github.com/yf591/PromptCrafter.git
     cd PromptCrafter
     ```
-2.  **依存関係をインストールします:**
+2. **依存関係をインストールします:**
 
     ```bash
     pip install -r requirements.txt
     ```
 
-3.  **アプリケーションを実行します:**
+3. **アプリケーションを実行します:**
 
     ```bash
     python main.py
     ```
 
-
 ## 設定
 
 アプリケーションの設定は、`app/config.py` を編集するか、GUI の設定画面から変更できます。
 
--   `"positive_prompt_template"`: ポジティブプロンプトのテンプレート。
--   `"negative_prompt_template"`: ネガティブプロンプトのテンプレート。
--   `"model_name"`: プロンプト生成に使用するモデル名（デフォルト: `AUTOMATIC/stable-diffusion-prompt-model`）。
+-   `"realistic_positive_prompt_template"`:  写実的な絵を生成するためのポジティブプロンプトのテンプレート。
+-   `"realistic_negative_prompt_template"`: 写実的な絵を生成するためのネガティブプロンプトのテンプレート。
+-   `"2d_positive_prompt_template"`: 2次元の絵を生成するためのポジティブプロンプトのテンプレート。
+-   `"2d_negative_prompt_template"`: 2次元の絵を生成するためのネガティブプロンプトのテンプレート。
+-   `"2.5d_positive_prompt_template"`: 2.5次元の絵を生成するためのポジティブプロンプトのテンプレート。
+-   `"2.5d_negative_prompt_template"`: 2.5次元の絵を生成するためのネガティブプロンプトのテンプレート。
+-   `"nsfw_realistic_positive_prompt_template"`:  NSFW用の写実的な絵を生成するためのポジティブプロンプトのテンプレート。
+-   `"nsfw_realistic_negative_prompt_template"`: NSFW用の写実的な絵を生成するためのネガティブプロンプトのテンプレート。
+-   `"nsfw_2d_positive_prompt_template"`: NSFW用の2次元の絵を生成するためのポジティブプロンプトのテンプレート。
+-   `"nsfw_2d_negative_prompt_template"`: NSFW用の2次元の絵を生成するためのネガティブプロンプトのテンプレート。
+-   `"nsfw_2.5d_positive_prompt_template"`: NSFW用の2.5次元の絵を生成するためのポジティブプロンプトのテンプレート。
+-   `"nsfw_2.5d_negative_prompt_template"`: NSFW用の2.5次元の絵を生成するためのネガティブプロンプトのテンプレート。
+-   `"model_name"`: プロンプト生成に使用するモデル名（デフォルト: `Gustavosta/MagicPrompt-Stable-Diffusion`）。
 -   `"use_model_for_generation"`: AIベースのプロンプト生成を有効または無効にするブール値。
 -   `"auto_generate_areas"`: AIベースの生成に使用するキーワードカテゴリのリスト。
 -  `"ai_generation_mode"`: AIがプロンプトを生成する範囲（ポジティブのみ、ネガティブのみ、両方）。
 -   `"loras"`: 選択する LoRA モデルのリスト。
+-   `"selected_positive_template"`: 使用するポジティブプロンプトのテンプレートのキー。
+-   `"selected_negative_template"`: 使用するネガティブプロンプトのテンプレートのキー。
 
 ## 免責事項
 
 このアプリケーションは研究目的で利用されることを意図しており、自己責任で使用してください。著者は、このアプリケーションの使用によって引き起こされたいかなる誤用や損害についても責任を負いません。
 
-
 ## 開発者
 yf591
-
 
 ## ライセンス
 

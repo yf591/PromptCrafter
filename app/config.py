@@ -1,3 +1,5 @@
+# config.py
+
 import json
 import os
 import csv
@@ -6,13 +8,25 @@ SETTINGS_FILE = "app_settings.json"
 CATEGORIES_FILE = "categories.json"
 
 DEFAULT_APP_SETTINGS = {
-    "positive_prompt_template": "high quality, masterpiece, best quality, extremely detailed CG, 8k, {keyword}, realistic, sharp focus, intricate details, professional art",
-    "negative_prompt_template": "low quality, worst quality, normal quality, blurry, pixelated, distortion, bad anatomy, disfigured, out of focus, bad proportions, cartoon, anime, 3d",
+    "realistic_positive_prompt_template": "high quality, masterpiece, best quality, extremely detailed CG, 8k, {keyword}, realistic, sharp focus, intricate details, professional art, highly detailed, aesthetic, hyperrealistic, cinematic lighting",
+    "realistic_negative_prompt_template": "low quality, worst quality, normal quality, blurry, pixelated, distortion, bad anatomy, disfigured, out of focus, bad proportions, cartoon, anime, 3d, nsfw, extra limbs, mutated hands, poorly drawn hands, poorly drawn face, missing limbs, extra arms, extra legs, bad hands, mutation, ugly, fused fingers, too many fingers, long neck",
+    "2d_positive_prompt_template": "masterpiece, best quality, high quality, {keyword}, highly detailed, aesthetic, vibrant, colorful, anime style, official art, sharp focus, character design, professional art",
+    "2d_negative_prompt_template": "low quality, worst quality, normal quality, blurry, pixelated, distortion, bad anatomy, disfigured, out of focus, bad proportions, realistic, 3d, nsfw, extra limbs, mutated hands, poorly drawn hands, poorly drawn face, missing limbs, extra arms, extra legs, bad hands, mutation, ugly, fused fingers, too many fingers, long neck",
+    "2.5d_positive_prompt_template": "masterpiece, best quality, high quality, {keyword}, highly detailed, aesthetic, semi-realistic, 2.5d, detailed shading, professional art, volumetric lighting, artistic, octane render, cinematic",
+    "2.5d_negative_prompt_template": "low quality, worst quality, normal quality, blurry, pixelated, distortion, bad anatomy, disfigured, out of focus, bad proportions, realistic, anime, 3d, nsfw, extra limbs, mutated hands, poorly drawn hands, poorly drawn face, missing limbs, extra arms, extra legs, bad hands, mutation, ugly, fused fingers, too many fingers, long neck",
+    "nsfw_realistic_positive_prompt_template": "nsfw, high quality, masterpiece, best quality, extremely detailed CG, 8k, {keyword}, realistic, sharp focus, intricate details, professional art, highly detailed, aesthetic, hyperrealistic, cinematic lighting, explicit, mature",
+    "nsfw_realistic_negative_prompt_template": "low quality, worst quality, normal quality, blurry, pixelated, distortion, bad anatomy, disfigured, out of focus, bad proportions, cartoon, anime, 3d, extra limbs, mutated hands, poorly drawn hands, poorly drawn face, missing limbs, extra arms, extra legs, bad hands, mutation, ugly, fused fingers, too many fingers, long neck, sfw",
+    "nsfw_2d_positive_prompt_template": "nsfw, masterpiece, best quality, high quality, {keyword}, highly detailed, aesthetic, vibrant, colorful, anime style, official art, sharp focus, character design, professional art, explicit, mature",
+    "nsfw_2d_negative_prompt_template": "low quality, worst quality, normal quality, blurry, pixelated, distortion, bad anatomy, disfigured, out of focus, bad proportions, realistic, 3d, extra limbs, mutated hands, poorly drawn hands, poorly drawn face, missing limbs, extra arms, extra legs, bad hands, mutation, ugly, fused fingers, too many fingers, long neck, sfw",
+    "nsfw_2.5d_positive_prompt_template": "nsfw, masterpiece, best quality, high quality, {keyword}, highly detailed, aesthetic, semi-realistic, 2.5d, detailed shading, professional art, volumetric lighting, artistic, octane render, cinematic, explicit, mature",
+    "nsfw_2.5d_negative_prompt_template": "low quality, worst quality, normal quality, blurry, pixelated, distortion, bad anatomy, disfigured, out of focus, bad proportions, realistic, anime, 3d, extra limbs, mutated hands, poorly drawn hands, poorly drawn face, missing limbs, extra arms, extra legs, bad hands, mutation, ugly, fused fingers, too many fingers, long neck, sfw",
     "model_name": "Gustavosta/MagicPrompt-Stable-Diffusion",
     "use_model_for_generation": True,
     "auto_generate_areas": ["People", "Background", "NSFW"],
     "ai_generation_mode": "both",
-    "loras": ["add-detail-xl", "epi_noiseoffset2", "lcm-lora-sdxl"]
+    "loras": ["add-detail-xl", "epi_noiseoffset2", "lcm-lora-sdxl"],
+    "selected_positive_template": "realistic_positive_prompt_template",
+    "selected_negative_template": "realistic_negative_prompt_template"
 }
 
 
