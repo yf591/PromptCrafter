@@ -136,6 +136,27 @@ class PromptCrafterGUI:
         y = (screen_height - height) // 2
         window.geometry(f"{width}x{height}+{x}+{y}")
 
+    def position_window_relative_to_parent(self, window, position):
+        window.update_idletasks()  # ウィンドウのサイズを確定
+        width = window.winfo_width()
+        height = window.winfo_height()
+        parent_x = self.root.winfo_x()
+        parent_y = self.root.winfo_y()
+        parent_width = self.root.winfo_width()
+        parent_height = self.root.winfo_height()
+
+        if position == "top_right":
+            x = parent_x + parent_width - width
+            y = parent_y
+        elif position == "bottom_right":
+            x = parent_x + parent_width - width
+            y = parent_y + parent_height - height
+        else:  # center (デフォルト)
+            x = parent_x + (parent_width - width) // 2
+            y = parent_y + (parent_height - height) // 2
+
+        window.geometry(f"+{x}+{y}")
+
     def setup_ui(self):
         # スクロールバー設定のために、CanvasとFrameを使用
         self.main_canvas = tk.Canvas(self.root)
@@ -177,8 +198,17 @@ class PromptCrafterGUI:
         keyword_buttons_frame = tk.Frame(self.main_frame)
         keyword_buttons_frame.pack(pady=5, anchor="w")
         # Generate Prompt button
-        generate_button = tk.Button(keyword_buttons_frame, text="Generate Prompt", command=self.generate_prompt_action, bg="white", fg="black", font=("Arial", 12))
+        generate_button = tk.Button(keyword_buttons_frame, text="Generate Prompt", command=self.generate_prompt_action, bg="#4CAF50", fg="white", font=("Arial", 12))
         generate_button.pack(side="left", padx=(0, 5))
+
+        # Generate Prompt (Positive Only) button
+        generate_positive_button = tk.Button(keyword_buttons_frame, text="Generate Prompt (Positive only)", command=lambda: self.generate_prompt_action("positive_only"), bg="#4CAF50", fg="white", font=("Arial", 12))
+        generate_positive_button.pack(side="left", padx=(0, 5))
+
+        # Generate Prompt (Negative Only) button
+        generate_negative_button = tk.Button(keyword_buttons_frame, text="Generate Prompt (Negative only)", command=lambda: self.generate_prompt_action("negative_only"), bg="#4CAF50", fg="white", font=("Arial", 12))
+        generate_negative_button.pack(side="left", padx=(0, 5))
+
         # Clear button for keyword entry
         clear_keyword_button = tk.Button(keyword_buttons_frame, text="Clear", command=lambda: self.keyword_entry.delete("1.0", tk.END), bg="#f0f0f0", font=("Arial", 12))
         clear_keyword_button.pack(side="left")
@@ -244,12 +274,36 @@ class PromptCrafterGUI:
         menubar.add_cascade(label="File", menu=filemenu)
         self.root.config(menu=menubar)
 
-        # setup_uiの最後に以下の行を追加
         self.main_frame.update_idletasks()  # フレームのサイズを更新
         # self.main_canvas.config(scrollregion=self.main_canvas.bbox("all")) # コメントアウト
         self.main_canvas.bind('<Configure>', self.on_canvas_configure) # スクロール領域の更新
 
-        # setup_uiの最後らへんに追加
+    def generate_prompt_action(self, mode="both"):
+        keyword = self.keyword_entry.get("1.0", tk.END).strip()
+        if not keyword:
+            messagebox.showwarning("Input Error", "Please enter a keyword.")
+            return
+
+        selected_lora = self.lora_var.get() if self.lora_var.get() != "None" else ""
+
+        # 修正: modeの値で条件分岐
+        if mode == "positive_only":
+            positive_prompt, _ = generate_prompt(keyword, selected_lora, "positive_only")
+            self.positive_prompt_text.delete("1.0", tk.END)
+            self.positive_prompt_text.insert(tk.END, positive_prompt)
+            self.negative_prompt_text.delete("1.0", tk.END) #ネガティブプロンプト欄をクリア
+        elif mode == "negative_only":
+            _, negative_prompt = generate_prompt(keyword, selected_lora, "negative_only")
+            self.positive_prompt_text.delete("1.0", tk.END) #ポジティブプロンプト欄をクリア
+            self.negative_prompt_text.delete("1.0", tk.END)
+            self.negative_prompt_text.insert(tk.END, negative_prompt)
+        else:
+            positive_prompt, negative_prompt = generate_prompt(keyword, selected_lora, "both")
+            self.positive_prompt_text.delete("1.0", tk.END)
+            self.positive_prompt_text.insert(tk.END, positive_prompt)
+            self.negative_prompt_text.delete("1.0", tk.END)
+            self.negative_prompt_text.insert(tk.END, negative_prompt)
+
     def bind_scroll_events(self):
         # スクロールバーのイベントをバインド
         self.main_canvas.bind_all("<MouseWheel>", self.on_mousewheel)
@@ -385,12 +439,16 @@ class PromptCrafterGUI:
             self.categories_frame.columnconfigure(i, weight=1)
 
     def show_subcategories(self, category):
+        # 選択された大項目を記憶
+        self.current_category = category
+
         categories = load_categories()
         subcategories = categories.get(category, {})
         popup = Toplevel(self.root)
         popup.title(category)
         popup.geometry("600x400")
-        self.center_window(popup)
+        # self.center_window(popup)
+        self.position_window_relative_to_parent(popup, "bottom_right") # 修正
         
         item_frame = scrolledtext.ScrolledText(popup, width=60, height=15, font=("Arial", 11))
         item_frame.pack(pady=5, padx=5, fill="both", expand=True)
@@ -399,21 +457,21 @@ class PromptCrafterGUI:
         if category == "Prompts":
             for i, (subcategory, items) in enumerate(subcategories.items()):
                 subcategory_button = tk.Button(item_frame, text=subcategory, 
-                                                    command=lambda items=items, subcategory=subcategory: self.show_items("Prompts", items, popup),
+                                                    command=lambda items=items, subcategory=subcategory: self.show_items(subcategory, items, popup),
                                                     bg="#9C27B0", fg="white", font=("Arial", 11))
                 item_frame.window_create("end", window=subcategory_button)
                 item_frame.insert("end", "\n")
         elif category == "Favorites":
             for i, (subcategory, items) in enumerate(subcategories.items()):
                 subcategory_button = tk.Button(item_frame, text=subcategory, 
-                                                    command=lambda items=items, subcategory=subcategory: self.show_items("Favorites", items, popup),
+                                                    command=lambda items=items, subcategory=subcategory: self.show_items(subcategory, items, popup),
                                                     bg="#9C27B0", fg="white", font=("Arial", 11))
                 item_frame.window_create("end", window=subcategory_button)
                 item_frame.insert("end", "\n")
         else:
             for i, (subcategory, items) in enumerate(subcategories.items()):
                 subcategory_button = tk.Button(item_frame, text=subcategory, 
-                                                    command=lambda cat=subcategory, items=items: self.show_items(cat, items, popup),
+                                                    command=lambda cat=subcategory, items=items: self.show_items(subcategory, items, popup),
                                                     bg="#9C27B0", fg="white", font=("Arial", 11))
                 item_frame.window_create("end", window=subcategory_button)
                 item_frame.insert("end", "\n")
@@ -425,38 +483,67 @@ class PromptCrafterGUI:
         item_popup = Toplevel(self.root)
         item_popup.title(subcategory)
         item_popup.geometry("600x400")
-        self.center_window(item_popup)
+        # self.center_window(item_popup) #削除
+        self.position_window_relative_to_parent(item_popup, "bottom_right") # 修正
         item_popup.config(cursor="arrow")
-        
+
         item_frame = scrolledtext.ScrolledText(item_popup, width=60, height=15, font=("Arial", 11))
         item_frame.pack(pady=5, padx=5, fill="both", expand=True)
         item_frame.configure(state="normal")
         self.item_vars = {}
-        if subcategory == "Positive" or subcategory == "Negative":
-            for key, value in items.items():
-                var = tk.BooleanVar()
-                self.item_vars[key] = var
+
+        # 大項目が "Favorites" かどうかを判定
+        is_favorites = self.current_category == "Favorites"
+
+        for key, value in items.items():
+            var = tk.BooleanVar()
+            self.item_vars[key] = var
+            if is_favorites:
+                # Favoritesの場合は、キーとサブカテゴリーを使って関数を呼び出す
                 check_button = tk.Checkbutton(item_frame, text=key, variable=var, bg="white", fg="black",
-                                              selectcolor="white", activebackground="white", activeforeground="black",
-                                              borderwidth=1, relief="solid", highlightthickness=0, font=("Arial", 11),
-                                              command=lambda en=value: self.add_item_to_prompt(en))
-                remove_button = tk.Button(item_frame, text="Remove", command=lambda key=key: self.remove_favorite(key, subcategory), bg="#f0f0f0", font=("Arial", 11))
+                                             selectcolor="white", activebackground="white", activeforeground="black",
+                                             borderwidth=1, relief="solid", highlightthickness=0, font=("Arial", 11),
+                                             command=lambda k=key, v=value, s=subcategory: self.add_favorite_item_to_prompt(k, v, s))
                 item_frame.window_create("end", window=check_button)
-                item_frame.window_create("end", window=remove_button)
                 item_frame.insert("end", "\n")
-        else:
-            for item_jp, item_en in items.items():
-                var = tk.BooleanVar()
-                self.item_vars[item_en] = var
-                check_button = tk.Checkbutton(item_frame, text=item_jp, variable=var, bg="white", fg="black",
-                                              selectcolor="white", activebackground="white", activeforeground="black",
-                                              borderwidth=1, relief="solid", highlightthickness=0, font=("Arial", 11),
-                                              command=lambda en=item_en: self.add_item_to_prompt(en))
+            else:
+                # 通常の場合は、add_item_to_prompt関数を呼び出す
+                check_button = tk.Checkbutton(item_frame, text=key, variable=var, bg="white", fg="black",
+                                             selectcolor="white", activebackground="white", activeforeground="black",
+                                             borderwidth=1, relief="solid", highlightthickness=0, font=("Arial", 11),
+                                             command=lambda en=value: self.add_item_to_prompt(en))
                 item_frame.window_create("end", window=check_button)
                 item_frame.insert("end", "\n")
 
         item_frame.configure(state="disabled")
         item_frame.bind("<MouseWheel>", lambda event: self.scroll_text(event, item_frame))
+
+    def add_item_to_prompt(self, item_en):
+        current_text = self.keyword_entry.get("1.0", tk.END).strip()
+        if current_text:
+            self.keyword_entry.delete("1.0", tk.END)
+            self.keyword_entry.insert("1.0", f"{current_text}, {item_en}")
+        else:
+            self.keyword_entry.insert("1.0", item_en)
+
+    def add_favorite_item_to_prompt(self, key, value, subcategory):
+        # "Favorites" の場合、選択されたプロンプトを対応するテキストエリアに追加
+        if subcategory == "Positive":
+            target_text_widget = self.positive_prompt_text
+        elif subcategory == "Negative":
+            target_text_widget = self.negative_prompt_text
+        else:
+            return
+
+        current_text = target_text_widget.get("1.0", tk.END).strip()
+        prompt_text = value  # value を使用するように修正
+
+        if current_text:
+            target_text_widget.delete("1.0", tk.END)
+            target_text_widget.insert("1.0", f"{current_text}\n{prompt_text}")
+        else:
+            target_text_widget.insert("1.0", prompt_text)
+
 
     def scroll_text(self, event, text_widget):
         text_widget.yview_scroll(int(-1*(event.delta/120)), "units")
@@ -516,8 +603,10 @@ class PromptCrafterGUI:
     def show_search_results(self, search_results):
         search_popup = Toplevel(self.root)
         search_popup.title("Search Results")
-        search_popup.geometry("400x300")
-        self.center_window(search_popup)
+        search_popup.geometry("700x300")
+        # self.center_window(search_popup)
+        self.position_window_relative_to_parent(search_popup, "top_right") # 修正
+
 
         item_frame = scrolledtext.ScrolledText(search_popup, width=50, height=10, font=("Arial", 11))
         item_frame.pack(pady=5, padx=5, fill="both", expand=True)
@@ -562,19 +651,31 @@ class PromptCrafterGUI:
         self.keyword_entry.insert("1.0", new_text)
         popup.destroy()
 
-    def generate_prompt_action(self):
+    def generate_prompt_action(self, mode="both"):
         keyword = self.keyword_entry.get("1.0", tk.END).strip()
         if not keyword:
             messagebox.showwarning("Input Error", "Please enter a keyword.")
             return
-        
+
         selected_lora = self.lora_var.get() if self.lora_var.get() != "None" else ""
-        positive_prompt, negative_prompt = generate_prompt(keyword, selected_lora)
-        
-        self.positive_prompt_text.delete("1.0", tk.END)
-        self.positive_prompt_text.insert(tk.END, positive_prompt)
-        self.negative_prompt_text.delete("1.0", tk.END)
-        self.negative_prompt_text.insert(tk.END, negative_prompt)
+
+        if mode == "positive_only":
+            # 修正: positive_prompt のみを取得し、Positive Prompt 欄にのみ追加
+            positive_prompt, _ = generate_prompt(keyword, selected_lora, mode)
+            self.positive_prompt_text.delete("1.0", tk.END)
+            self.positive_prompt_text.insert(tk.END, positive_prompt)
+        elif mode == "negative_only":
+            # 修正: negative_prompt のみを取得し、Negative Prompt 欄にのみ追加
+            _, negative_prompt = generate_prompt(keyword, selected_lora, mode)
+            self.negative_prompt_text.delete("1.0", tk.END)
+            self.negative_prompt_text.insert(tk.END, negative_prompt)
+        else:
+            positive_prompt, negative_prompt = generate_prompt(keyword, selected_lora, mode)
+            self.positive_prompt_text.delete("1.0", tk.END)
+            self.positive_prompt_text.insert(tk.END, positive_prompt)
+            self.negative_prompt_text.delete("1.0", tk.END)
+            self.negative_prompt_text.insert(tk.END, negative_prompt)
+
         
     def copy_positive_prompt(self):
         pyperclip.copy(self.positive_prompt_text.get("1.0", tk.END))
