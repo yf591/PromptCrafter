@@ -8,48 +8,19 @@ SETTINGS_FILE = "app_settings.json"
 CATEGORIES_FILE = "categories.json"
 
 DEFAULT_APP_SETTINGS = {
-    "realistic_positive_prompt_template": "high quality, masterpiece, best quality, extremely detailed CG, 8k, {keyword}, realistic, sharp focus, intricate details, professional art, highly detailed, aesthetic, hyperrealistic, cinematic lighting",
-    "realistic_negative_prompt_template": "low quality, worst quality, normal quality, blurry, pixelated, distortion, nsfw, "
-                                         "(bad anatomy:1.3), (disfigured:1.3), (bad proportions:1.3), (ugly:1.2), (mutation:1.2), (long neck:1.3), cartoon, anime, 3d, "
-                                         "(((extra limbs:1.5))), ((extra arms:1.5)), ((extra legs:1.5)), ((extra hands:1.5)), ((extra feet:1.5)), ((extra fingers:1.5)), ((extra toes:1.5)), "
-                                         "((missing limbs:1.5)), ((missing arms:1.5)), ((missing legs:1.5)), ((missing hands:1.5)), ((missing feet:1.5)), "
-                                         "(((mutated hands:1.5))), (((bad hands:1.5))), ((poorly drawn hands:1.5)), ((fused fingers:1.5)), ((too many fingers:1.5)), ((bad fingers:1.5)), "
-                                         "(((poorly drawn face:1.4))), ((bad face:1.4))",
+    "realistic_positive_prompt_template": "high quality, masterpiece, best quality, extremely detailed CG, 8k, {keyword}, realistic, sharp focus, intricate details, professional art, highly detailed, aesthetic, (photorealistic:1.4), (high resolution:1.2), bright",
+    "realistic_negative_prompt_template": "(low quality:1.4), (worst quality:1.4), (monochrome:1.3), normal quality, blurry, pixelated, distortion, nsfw, (bad anatomy:1.3), (disfigured:1.3), (bad proportions:1.3), (ugly:1.2), (mutation:1.2), (long neck:1.3), cartoon, anime, 3d, extra limbs, mutated hands, poorly drawn hands, poorly drawn face, missing limbs, extra arms, extra legs, bad hands, mutation, fused fingers, too many fingers, (text:1.5), (logo:1.5), (watermark:1.5), (signature:1.5), (username:1.5), (artist name:1.5), (error:1.5), (jpeg artifacts:1.5)",
     "2d_positive_prompt_template": "masterpiece, best quality, high quality, {keyword}, highly detailed, aesthetic, vibrant, colorful, anime style, official art, sharp focus, character design, professional art",
-    "2d_negative_prompt_template": "low quality, worst quality, normal quality, blurry, pixelated, distortion, nsfw, "
-                                     "(bad anatomy:1.3), (disfigured:1.3), (bad proportions:1.3), (ugly:1.2), (mutation:1.2), (long neck:1.3), realistic, 3d, "
-                                     "(((extra limbs:1.5))), ((extra arms:1.5)), ((extra legs:1.5)), ((extra hands:1.5)), ((extra feet:1.5)), ((extra fingers:1.5)), ((extra toes:1.5)), "
-                                     "((missing limbs:1.5)), ((missing arms:1.5)), ((missing legs:1.5)), ((missing hands:1.5)), ((missing feet:1.5)), "
-                                     "(((mutated hands:1.5))), (((bad hands:1.5))), ((poorly drawn hands:1.5)), ((fused fingers:1.5)), ((too many fingers:1.5)), ((bad fingers:1.5)), "
-                                     "(((poorly drawn face:1.4))), ((bad face:1.4))",
+    "2d_negative_prompt_template": "(low quality:1.4), (worst quality:1.4), (monochrome:1.3), normal quality, blurry, pixelated, distortion, nsfw, (bad anatomy:1.3), (disfigured:1.3), (bad proportions:1.3), (ugly:1.2), (mutation:1.2), (long neck:1.3), realistic, 3d, extra limbs, mutated hands, poorly drawn hands, poorly drawn face, missing limbs, extra arms, extra legs, bad hands, mutation, fused fingers, too many fingers, (text:1.5), (logo:1.5), (watermark:1.5), (signature:1.5), (username:1.5), (artist name:1.5), (error:1.5), (jpeg artifacts:1.5)",
     "2.5d_positive_prompt_template": "masterpiece, best quality, high quality, {keyword}, highly detailed, aesthetic, semi-realistic, 2.5d, detailed shading, professional art, volumetric lighting, artistic, octane render, cinematic",
-    "2.5d_negative_prompt_template": "low quality, worst quality, normal quality, blurry, pixelated, distortion, nsfw, "
-                                       "(bad anatomy:1.3), (disfigured:1.3), (bad proportions:1.3), (ugly:1.2), (mutation:1.2), (long neck:1.3), realistic, anime, 3d, "
-                                       "(((extra limbs:1.5))), ((extra arms:1.5)), ((extra legs:1.5)), ((extra hands:1.5)), ((extra feet:1.5)), ((extra fingers:1.5)), ((extra toes:1.5)), "
-                                       "((missing limbs:1.5)), ((missing arms:1.5)), ((missing legs:1.5)), ((missing hands:1.5)), ((missing feet:1.5)), "
-                                       "(((mutated hands:1.5))), (((bad hands:1.5))), ((poorly drawn hands:1.5)), ((fused fingers:1.5)), ((too many fingers:1.5)), ((bad fingers:1.5)), "
-                                       "(((poorly drawn face:1.4))), ((bad face:1.4))",
-    "nsfw_realistic_positive_prompt_template": "nsfw, high quality, masterpiece, best quality, extremely detailed CG, 8k, {keyword}, realistic, sharp focus, intricate details, professional art, highly detailed, aesthetic, hyperrealistic, cinematic lighting, explicit, mature",
-    "nsfw_realistic_negative_prompt_template": "low quality, worst quality, normal quality, blurry, pixelated, distortion, sfw, "
-                                              "(bad anatomy:1.3), (disfigured:1.3), (bad proportions:1.3), (ugly:1.2), (mutation:1.2), (long neck:1.3), cartoon, anime, 3d, "
-                                              "(((extra limbs:1.5))), ((extra arms:1.5)), ((extra legs:1.5)), ((extra hands:1.5)), ((extra feet:1.5)), ((extra fingers:1.5)), ((extra toes:1.5)), "
-                                              "((missing limbs:1.5)), ((missing arms:1.5)), ((missing legs:1.5)), ((missing hands:1.5)), ((missing feet:1.5)), "
-                                              "(((mutated hands:1.5))), (((bad hands:1.5))), ((poorly drawn hands:1.5)), ((fused fingers:1.5)), ((too many fingers:1.5)), ((bad fingers:1.5)), "
-                                              "(((poorly drawn face:1.4))), ((bad face:1.4))",
+    "2.5d_negative_prompt_template": "(low quality:1.4), (worst quality:1.4), (monochrome:1.3), normal quality, blurry, pixelated, distortion, nsfw, (bad anatomy:1.3), (disfigured:1.3), (bad proportions:1.3), (ugly:1.2), (mutation:1.2), (long neck:1.3), realistic, anime, 3d, extra limbs, mutated hands, poorly drawn hands, poorly drawn face, missing limbs, extra arms, extra legs, bad hands, mutation, fused fingers, too many fingers, (text:1.5), (logo:1.5), (watermark:1.5), (signature:1.5), (username:1.5), (artist name:1.5), (error:1.5), (jpeg artifacts:1.5)",
+    "nsfw_realistic_positive_prompt_template": "nsfw, high quality, masterpiece, best quality, extremely detailed CG, 8k, {keyword}, realistic, sharp focus, intricate details, professional art, highly detailed, aesthetic, (photorealistic:1.4), (high resolution:1.2), bright, explicit, mature",
+    "nsfw_realistic_negative_prompt_template": "(low quality:1.4), (worst quality:1.4), (monochrome:1.3), normal quality, blurry, pixelated, distortion, sfw, (bad anatomy:1.3), (disfigured:1.3), (bad proportions:1.3), (ugly:1.2), (mutation:1.2), (long neck:1.3), cartoon, anime, 3d, extra limbs, mutated hands, poorly drawn hands, poorly drawn face, missing limbs, extra arms, extra legs, bad hands, mutation, fused fingers, too many fingers, (text:1.5), (logo:1.5), (watermark:1.5), (signature:1.5), (username:1.5), (artist name:1.5), (error:1.5), (jpeg artifacts:1.5)",
     "nsfw_2d_positive_prompt_template": "nsfw, masterpiece, best quality, high quality, {keyword}, highly detailed, aesthetic, vibrant, colorful, anime style, official art, sharp focus, character design, professional art, explicit, mature",
-    "nsfw_2d_negative_prompt_template": "low quality, worst quality, normal quality, blurry, pixelated, distortion, sfw, "
-                                          "(bad anatomy:1.3), (disfigured:1.3), (bad proportions:1.3), (ugly:1.2), (mutation:1.2), (long neck:1.3), realistic, 3d, "
-                                          "(((extra limbs:1.5))), ((extra arms:1.5)), ((extra legs:1.5)), ((extra hands:1.5)), ((extra feet:1.5)), ((extra fingers:1.5)), ((extra toes:1.5)), "
-                                          "((missing limbs:1.5)), ((missing arms:1.5)), ((missing legs:1.5)), ((missing hands:1.5)), ((missing feet:1.5)), "
-                                          "(((mutated hands:1.5))), (((bad hands:1.5))), ((poorly drawn hands:1.5)), ((fused fingers:1.5)), ((too many fingers:1.5)), ((bad fingers:1.5)), "
-                                          "(((poorly drawn face:1.4))), ((bad face:1.4))",
+    "nsfw_2d_negative_prompt_template": "(low quality:1.4), (worst quality:1.4), (monochrome:1.3), normal quality, blurry, pixelated, distortion, sfw, (bad anatomy:1.3), (disfigured:1.3), (bad proportions:1.3), (ugly:1.2), (mutation:1.2), (long neck:1.3), realistic, 3d, extra limbs, mutated hands, poorly drawn hands, poorly drawn face, missing limbs, extra arms, extra legs, bad hands, mutation, fused fingers, too many fingers, (text:1.5), (logo:1.5), (watermark:1.5), (signature:1.5), (username:1.5), (artist name:1.5), (error:1.5), (jpeg artifacts:1.5)",
     "nsfw_2.5d_positive_prompt_template": "nsfw, masterpiece, best quality, high quality, {keyword}, highly detailed, aesthetic, semi-realistic, 2.5d, detailed shading, professional art, volumetric lighting, artistic, octane render, cinematic, explicit, mature",
-    "nsfw_2.5d_negative_prompt_template": "low quality, worst quality, normal quality, blurry, pixelated, distortion, sfw, "
-                                          "(bad anatomy:1.3), (disfigured:1.3), (bad proportions:1.3), (ugly:1.2), (mutation:1.2), (long neck:1.3), realistic, anime, 3d, "
-                                          "(((extra limbs:1.5))), ((extra arms:1.5)), ((extra legs:1.5)), ((extra hands:1.5)), ((extra feet:1.5)), ((extra fingers:1.5)), ((extra toes:1.5)), "
-                                          "((missing limbs:1.5)), ((missing arms:1.5)), ((missing legs:1.5)), ((missing hands:1.5)), ((missing feet:1.5)), "
-                                          "(((mutated hands:1.5))), (((bad hands:1.5))), ((poorly drawn hands:1.5)), ((fused fingers:1.5)), ((too many fingers:1.5)), ((bad fingers:1.5)), "
-                                          "(((poorly drawn face:1.4))), ((bad face:1.4))",
+    "nsfw_2.5d_negative_prompt_template": "(low quality:1.4), (worst quality:1.4), (monochrome:1.3), normal quality, blurry, pixelated, distortion, sfw, (bad anatomy:1.3), (disfigured:1.3), (bad proportions:1.3), (ugly:1.2), (mutation:1.2), (long neck:1.3), realistic, anime, 3d, extra limbs, mutated hands, poorly drawn hands, poorly drawn face, missing limbs, extra arms, extra legs, bad hands, mutation, fused fingers, too many fingers, (text:1.5), (logo:1.5), (watermark:1.5), (signature:1.5), (username:1.5), (artist name:1.5), (error:1.5), (jpeg artifacts:1.5)",
+    "model_name": "Gustavosta/MagicPrompt-Stable-Diffusion",
     "use_model_for_generation": True,
     "auto_generate_areas": ["People", "Background", "NSFW"],
     "ai_generation_mode": "both",
