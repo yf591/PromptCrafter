@@ -2347,8 +2347,8 @@
             "後ろから": "from behind",
             "上から": "from above"
         }
-
     },
+
     "Style": {
         "アニメイラスト用": {
             "漫画風1": "manga",
@@ -2358,26 +2358,14 @@
             "縁が黒くアニメっぽく": "black outline",
             "肌にテカりが入る(アニメによくある肌用のハイライト)": "gleaming skin"
         }
-
     },
+
     "Favorites": {
         "Positive": {
-            "ガーターベルト赤パンinバス": "nsfw, extremely detailed anime, 8k, masterpiece, best quality, hyperrealistic, sharp focus, intricate details, professional art, perfect lighting, ultra high res, loli faced girl, smile, small face, red lip, small hip, small eyes, very small breasts, small areola, slim body, half twin tail, medium hair, black hair, black Garter belt, black Fishnet stockings, red panty style, full body, dynamic pose, in the bus",
-            "赤パンonベッド": "nsfw, extremely detailed anime, 8k, masterpiece, best quality, hyperrealistic, sharp focus, intricate details, professional art, perfect lighting, ultra high res, ((super loli faced girl:1.3)), smile, small face, red natural lip, ((small hip)), small eyes, (topless:1.1), ((flat breasts)), small areola, (slim body:1.1), half twin tail, medium hair, black hair, Bright red fishnet stockings, Bright red panty, ((Hands behind the back:1.3)), full body shot, ftont view, looking at viewer, on the white bed",
-            "海の側": "nsfw, extremely detailed anime, 8k, masterpiece, best quality, hyperrealistic, sharp focus, intricate details, professional art, perfect lighting, ultra high res, ((super cute faced girl:1.3)), smile, small face, ((small hip)), small eyes, (topless:1.1), ((flat breasts)), small areola, (slim body:1.1), high pony tail, medium hair, black hair, Bright red panty, ((Hands behind the back:1.3)), full body shot, ftont view, looking at viewer, in the sky",
-            "AmazonPhotos_2_Sn-15:0.4": "nsfw, high quality, masterpiece, best quality, extremely detailed CG, 8k, 20 years old, cute 2girl, black eyes, joyful, full body, topless, special occasion thong panties, (mosaic censoring:1.5), slender, natural makeup, in the sky, ftont view, midday, flash lighting, realistic, sharp focus, intricate details, professional art, highly detailed, aesthetic, hyperrealistic, cinematic lighting <lora:AmazonPhotos_2_Sn-15:0.4>",
-            "いいかも": "nsfw, high quality, masterpiece, best quality, extremely detailed anime, 8k, 20 years old, many cute girls,  loli faced, black eyes, joyful, full body, ((topless)), (flat breasts),  (thong undies, (mosaic censoring:1.5)), slender, natural makeup, ftont view, midday, on the bed, realistic, sharp focus, intricate details, highly detailed, aesthetic, hyperrealistic, spot lighting <lora:AmazonPhotos_2_Sn-25:0.5>",
-            "貧乳マイクロビキニ": "nsfw, masterpiece, best quality, high quality, 20 years old, loli faced cute girls, black eyes, black hair, joyful, full body, (flat breasts), (thong undies, tiny micro bikini), natural makeup, ftont view, midday, on the bed, highly detailed, aesthetic, vibrant, colorful, anime style, official art, sharp focus, character design, professional art, explicit, mature, spot lighting   <lora:AmazonPhotos_2_Sn-15:0.2>",
-            "わき見せM字開脚マイクロビキニ": "nsfw, masterpiece, best quality, high quality, 20 years old, loli faced cute girl, small face, black eyes, black hair, joyful, full body, (flat breasts), (thong undies, tiny white micro bikini),  natural makeup, (spread legs:1.3), (squatting:1.3), (armpits:1.3), pussy focus, (cameltoe:1.3), front view,  midday, on the bed, highly detailed, aesthetic, vibrant, colorful, anime style, official art, sharp focus, character design, professional art, explicit, mature, spot lighting <lora:AmazonPhotos_2_Sn-15:0.2>",
-            "わき見せM字開脚トップレス": "nsfw, masterpiece, best quality, high quality, 20 years old, loli faced cute girl, small face, black eyes, black hair, joyful, full body, (flat breasts), (topless:1.3), (thong undies, tiny white micro bikini:1.3), natural makeup, (spread legs:1.3), (squatting:1.3), (armpits:1.3), nipples focus, white socks, (cameltoe:1.3), front view,  midday, on the bed, highly detailed, aesthetic, vibrant, colorful, anime style, official art, sharp focus, character design, professional art, explicit, mature, spot lighting",
-            "ちいぱ": "sfw, masterpiece, best quality, high quality, 18 years old, loli faced cute girl, (small face:1.3), black eyes, black hair, joyful, upper body, close-up, (flat breasts), (school uniform:1.3), natural makeup, front view, midday, schoolside, highly detailed, aesthetic, vibrant, colorful, anime style, official art, sharp focus, character design, professional art, explicit, mature, spot lighting <lora:AmazonPhotos_Sn-15:0.4>",
-            "Ahegao貧乳並べ_2D": "nsfw, masterpiece, best quality, high quality, 18 years old, nsfw, (small breasts:1.2), cute 5girls, (full nude:1.5), whole body, standing, (nipples peek:1.1), (arms behind back:1.5), (ahegao:1.8), (steam:1.1), (wet:0.7), (trembling:1.7), (tears:1.1), (orgasm:1.5), on the bed, highly detailed, aesthetic, vibrant, colorful, anime style, official art, sharp focus, character design, professional art, explicit, mature,  <lora:harem_4:0.5>,  <lora:AmazonPhotos_2_Sn-15:0.5>",
-            "制服複数": "nsfw, masterpiece, best quality, high quality, 18 years old, loli faced, (3+multipul cute girls), (small face:1.3), black eyes, black hair, joyful, (upper body:1.5), pussy close-up, (flat breasts), (school uniform:1.3), natural makeup, (arms behind back:1.5), front view, midday, schoolside, highly detailed, aesthetic, vibrant, colorful, anime style, official art, sharp focus, character design, professional art, explicit, mature, spot lighting <lora:harem_4:0.6>, <lora:AmazonPhotos_Sn-15:0.4>"
+
         },
         "Negative": {
-            "ガーターベルト赤パンinバス": "low quality, worst quality, normal quality, blurry, pixelated, distortion, bad anatomy, disfigured, out of focus, bad proportions, no slim body, big face, big breasts, big hip, big eyes, no panty, no black hair,  (worst quality:1.5), (low quality:1.5), (normal quality:1.5), lowres, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, age spot, low contrast, text, logo, watermark",
-            "ちいぱ": "low quality, worst quality, normal quality, blurry, pixelated, distortion, nsfw, (bad anatomy:1.3), (disfigured:1.3), (bad proportions:1.3), (ugly:1.2), (mutation:1.2), (long neck:1.3), cartoon, anime, 3d, (((extra limbs:1.5))), ((extra arms:1.5)), ((extra legs:1.5)), ((extra hands:1.5)), ((extra feet:1.5)), ((extra fingers:1.5)), ((extra toes:1.5)), ((missing limbs:1.5)), ((missing arms:1.5)), ((missing legs:1.5)), ((missing hands:1.5)), ((missing feet:1.5)), (((mutated hands:1.5))), (((bad hands:1.5))), ((poorly drawn hands:1.5)), ((fused fingers:1.5)), ((too many fingers:1.5)), ((bad fingers:1.5)), (((poorly drawn face:1.4))), ((bad face:1.4))",
-            "chichipui生成機能": "(worst quality:1.4), (low quality:1.4), (monochrome:1.3), (bad anatomy, bad hands:1.4), (watermark, username:1.2), lowres, text, error, missing fingers, extra digit, fewer digits, cropped, normal quality, jpeg artifacts, sfw"
+
         }
     }
 }
