@@ -39,19 +39,40 @@ PromptCrafter/
 
 ## はじめ方
 
-1. **リポジトリをクローンします:**
+1. **リポジトリをクローンします**
 
     ```bash
     git clone https://github.com/yf591/PromptCrafter.git
     cd PromptCrafter
     ```
-2. **依存関係をインストールします:**
+
+2. **仮想環境を作成し、アクティベートします**
+
+    **Windows:**
+    ```bash
+    python -m venv .venv
+    .venv\Scripts\activate
+    ```
+
+    **macOS/Linux:**
+    ```bash
+    python3 -m venv .venv
+    source .venv/bin/activate
+    ```
+
+3. **依存関係をインストールします**
 
     ```bash
     pip install -r requirements.txt
     ```
 
-3. **アプリケーションを実行します:**
+3. **依存関係をインストールします**
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. **アプリケーションを実行します**
 
     ```bash
     python main.py
